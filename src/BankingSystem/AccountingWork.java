@@ -32,7 +32,7 @@ public class AccountingWork {
             String sql = "INSERT INTO banking_details(first_name,last_name,phone_number,address,atm_pin,balance) VALUES ('" + fn + "','" + ln + "','" + phoneNumber + "','" + address + "','" + atmPin + "','0.0')";
             statement.executeUpdate(sql);
             System.out.println("Account successfully created. Thank you for banking with us!");
-            String query = "select account_number from banking_details where first_name = '"+fn+"'";
+            String query = "select account_number from banking_details where phone_number = '"+phoneNumber+"'";
             ResultSet resultSet = statement.executeQuery(query);
             resultSet.next();
             int accountNumber = resultSet.getInt(1);
