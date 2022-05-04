@@ -33,7 +33,6 @@ public class AccountingWork {
             statement.executeUpdate(sql);
             System.out.println("Account successfully created. Thank you for banking with us!");
             String query = "select account_number from banking_details where first_name = '"+fn+"'";
-            // select account_number from banking_details where first_name = 'rus'
             ResultSet resultSet = statement.executeQuery(query);
             resultSet.next();
             int accountNumber = resultSet.getInt(1);
