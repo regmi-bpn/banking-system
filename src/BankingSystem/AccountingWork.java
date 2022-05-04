@@ -5,6 +5,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Scanner;
+import java.util.UUID;
 
 public class AccountingWork {
     Connection cn = new Database().getConnection();
@@ -17,6 +18,7 @@ public class AccountingWork {
 
     public void newAccount() throws Exception {
         //Creating Database Connection
+        String acNo= UUID.randomUUID().toString().split("-")[0];
 
         System.out.println("Enter your first name: ");
         String fn = sc.nextLine();
@@ -29,13 +31,13 @@ public class AccountingWork {
         System.out.println("Enter your ATM pin : ");
         int atmPin = sc.nextInt();
         try {
-            String sql = "INSERT INTO banking_details(first_name,last_name,phone_number,address,atm_pin,balance) VALUES ('" + fn + "','" + ln + "','" + phoneNumber + "','" + address + "','" + atmPin + "','0.0')";
+            String sql = "INSERT INTO banking_details(account_number,first_name,last_name,phone_number,address,atm_pin,balance) VALUES ('"+acNo+"','" + fn + "','" + ln + "','" + phoneNumber + "','" + address + "','" + atmPin + "','0.0')";
             statement.executeUpdate(sql);
             System.out.println("Account successfully created. Thank you for banking with us!");
             String query = "select account_number from banking_details where phone_number = '"+phoneNumber+"'";
             ResultSet resultSet = statement.executeQuery(query);
             resultSet.next();
-            int accountNumber = resultSet.getInt(1);
+            String accountNumber = resultSet.getString(1);
             System.out.println("Your account number is "+accountNumber);
 
         } catch (SQLException ex) {
