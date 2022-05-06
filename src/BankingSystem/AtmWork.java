@@ -31,25 +31,30 @@ public class AtmWork{
             System.out.println("Enter your Atm Pin: ");
             int atmPin= sc.nextInt();
             sc.nextLine();
+            int length = String.valueOf(atmPin).length();
             if (atmPin==aPin) {
-                System.out.println("Enter the amount you want to withdraw: ");
-                double withDraw = sc.nextDouble();
-                if(oldBalance>= withDraw) {
-                    double newBalance = oldBalance - withDraw;
+                if (length == 4) {
+                    System.out.println("Enter the amount you want to withdraw: ");
+                    double withDraw = sc.nextDouble();
+                    if (oldBalance >= withDraw) {
+                        double newBalance = oldBalance - withDraw;
 
-                    try {
-                        String balance = "update banking_details set balance =" + newBalance + "where account_number = " + accountNumber;
-                        statement.executeUpdate(balance);
-                        System.out.println("Your balance has been withdrawn successfully");
-                        System.out.println("Your remaining balance is: " + newBalance);
-                    } catch (SQLException exception) {
-                        System.out.println("Error!! Sorry for the inconvenience");
+                        try {
+                            String balance = "update banking_details set balance =" + newBalance + "where account_number = " + accountNumber;
+                            statement.executeUpdate(balance);
+                            System.out.println("Your balance has been withdrawn successfully");
+                            System.out.println("Your remaining balance is: " + newBalance);
+                        } catch (SQLException exception) {
+                            System.out.println("Error!! Sorry for the inconvenience");
+                        }
+                    } else {
+                        System.out.println("Insufficient balance. Try again!!");
                     }
-                }else{
-                    System.out.println("Insufficient balance. Try again!!");
+                } else {
+                    System.out.println("Wrong Pin!!!");
                 }
             }else{
-                System.out.println("Wrong Pin!!!");
+                System.out.println("The pin should only be of four number");
             }
 
         }catch(SQLException exception){

@@ -24,25 +24,38 @@ public class AccountingWork {
         String fn = sc.nextLine();
         System.out.println("Enter your last name: ");
         String ln = sc.nextLine();
-        System.out.println("Enter your phone number: ");
-        String phoneNumber = sc.nextLine();
-        System.out.println("Enter your address name: ");
-        String address = sc.nextLine();
-        System.out.println("Enter your ATM pin : ");
-        int atmPin = sc.nextInt();
-        try {
-            String sql = "INSERT INTO banking_details(account_number,first_name,last_name,phone_number,address,atm_pin,balance) VALUES ('"+acNo+"','" + fn + "','" + ln + "','" + phoneNumber + "','" + address + "','" + atmPin + "','0.0')";
-            statement.executeUpdate(sql);
-            System.out.println("Account successfully created. Thank you for banking with us!");
-            String query = "select account_number from banking_details where phone_number = '"+phoneNumber+"'";
-            ResultSet resultSet = statement.executeQuery(query);
-            resultSet.next();
-            String accountNumber = resultSet.getString(1);
-            System.out.println("Your account number is "+accountNumber);
 
-        } catch (SQLException ex) {
-            System.out.println("Error!!!");
-            System.out.println(ex.getMessage());
+        System.out.println("Enter ten digit phone number: ");
+        String phoneNumber = sc.nextLine();
+        System.out.println("Enter four digit ATM pin : ");
+        int atmPin = sc.nextInt();
+        sc.nextLine();
+        int pinLength = String.valueOf(atmPin).length();
+        int numberLength = String.valueOf(phoneNumber).length();
+
+        if( numberLength == 10 && pinLength == 4) {
+            System.out.println("Enter your address name: ");
+            String address = sc.nextLine();
+
+
+            try {
+
+                String sql = "INSERT INTO banking_details(account_number,first_name,last_name,phone_number,address,atm_pin,balance) VALUES ('" + acNo + "','" + fn + "','" + ln + "','" + phoneNumber + "','" + address + "','" + atmPin + "','0.0')";
+                statement.executeUpdate(sql);
+                System.out.println("Account successfully created. Thank you for banking with us!");
+                String query = "select account_number from banking_details where phone_number = '" + phoneNumber + "'";
+                ResultSet resultSet = statement.executeQuery(query);
+                resultSet.next();
+                String accountNumber = resultSet.getString(1);
+                System.out.println("Your account number is " + accountNumber);
+
+
+            } catch (SQLException ex) {
+                System.out.println("Error!!!");
+                System.out.println(ex.getMessage());
+            }
+        }else{
+            System.out.println("Enter ten digit phone number or four digit atm pin and try again");
         }
 
     }
